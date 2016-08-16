@@ -1,0 +1,19 @@
+{
+  "name": "jira-issuer",
+  "version": "1.0.0",
+  "description": "Simple JIRA issue updater",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "JIRA",
+    "issues",
+    "bulk",
+    "update"
+  ],
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.0"
+  }
+}

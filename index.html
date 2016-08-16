@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="UTF-8">
+    <title>Jira Issuer</title>
+  </head>
+  <body>
+    <h1>JIRA issuer</h1>
+    <div ui-view="header"></div>
+    <div ui-view="content"></div>
+  </body>
+
+  <script src="./scripts/vendor/angular.js"></script>
+  <script src="./scripts/vendor/angular-ui-router.js"></script>
+
+  <script src="./scripts/app/app.module.js"></script>
+  <script src="./scripts/app/app.config.js"></script>
+  <script src="./scripts/app/app.run.js"></script>
+
+  <script src="./scripts/app/login/login.state.js"></script>
+  <script src="./scripts/app/login/login.controller.js"></script>
+  <script src="./scripts/app/grid/grid.state.js"></script>
+  <script src="./scripts/app/grid/grid.controller.js"></script>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>
