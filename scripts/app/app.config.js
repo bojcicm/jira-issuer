@@ -1,7 +1,7 @@
 (function() {
     'use strict'; 
 
-    angular.module('app').config(AppConfig); 
+    app.config(AppConfig); 
 
     AppConfig.$inject = ['$locationProvider', '$urlRouterProvider']; 
     function AppConfig($locationProvider, $urlRouterProvider) {        

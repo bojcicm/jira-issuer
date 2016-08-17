@@ -1,2 +1,16 @@
-<div>Aww YEAG1!</div>
-<button ng-click="vm.actions.logout()">NAzad</button>
+
+<input type="text" ng-model='vm.jqlQuery'>
+<button ng-click="vm.actions.search()">Search JIRA</button>
+<button ng-click="vm.actions.updateIssues()" ng-disabled="!vm.response">Update issues</button>
+<br/>
+<hr/>
+<div ng-show="vm.isSearching">
+    <p>Loading ...</p>
+</div>
+<div ng-show="!!vm.response">
+    <div ng-repeat="issue in vm.response">
+        <p>{{issue.fields.issuetype.name}} - {{issue.key}}</p>
+        <p>Estimate: {{issue.fields.timeoriginalestimate}}<p>
+    </div>
+</div>
+

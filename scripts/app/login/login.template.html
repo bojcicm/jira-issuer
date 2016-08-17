@@ -1,4 +1,5 @@
 <div class="loginBox">
+    <p ng-show="vm.failedLogin">Login failed, try again</p>
     <form name="loginForm" novalidate ng-submit="vm.actions.tryLogin()">
         <h1 class="loginBox__title">Login to JIRA</h1>
         

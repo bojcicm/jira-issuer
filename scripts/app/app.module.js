@@ -1,5 +1,2 @@
-(function(){
-    'use strict';
-
-    angular.module('app', ['ui.router']);
-})();
+'use strict';
+var app = angular.module('app', ['ui.router']);

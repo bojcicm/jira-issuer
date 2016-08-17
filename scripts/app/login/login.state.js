@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app').config(HomeStateConfig);
+    app.config(HomeStateConfig);
 
     HomeStateConfig.$inject = ['$stateProvider'];
     function HomeStateConfig($stateProvider) {
