@@ -1,27 +1,27 @@
 (function () {
     'use strict';
-    app.factory('accessService',['$q', '$http', 'passwordService', function($q, $http, passwordService){
+    app.factory('accessService',['$q', '$http', 'passwordService', 'jiraService', function($q, $http, passwordService, jiraService){
         function login(email, password){
             var deffered = $q.defer();
             var authPayload = 'Basic ' + new Buffer(email + ":" + password).toString('base64');
-            var options = {
-                url: 'https://neogov.jira.com/rest/auth/1/session',
-                method: "GET",
-                headers:{
-                    'Content-Type' : 'application/json',
-                    'Authorization' : authPayload
+            
+            jiraService.getSession(authPayload).then(successLogin, failedLogin);
+            return deffered.promise;
+
+            function successLogin(response){
+                if(response.body != "" && response.statusCode != 401){
+                    passwordService.saveCredentials(email, password);
+                    deffered.resolve();
+                }else{
+                    console.log(response);
+                    deffered.reject();
                 }
             }
-            $http(options).then(function successLogin(response){
-                if(response.data = "")
-                    deffered.reject();
-                passwordService.saveCredentials(email, password);
-                deffered.resolve();
-            }, function failedLogin(response){
-                console.log(response.status);
+            function failedLogin(response){
                 deffered.reject();
-            });
-            return deffered.promise;
+                console.log(response);
+            }
+
         }
 
         return {

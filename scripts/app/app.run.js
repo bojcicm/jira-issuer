@@ -3,8 +3,9 @@
 
     app.run(GoToLoginState); 
 
-    GoToLoginState.$inject = ['$state'];
-    function GoToLoginState($state) {
+    GoToLoginState.$inject = ['$state', 'passwordService'];
+    function GoToLoginState($state, passwordService) {
+        passwordService.clearCredentials();
         $state.go('login', { location: false });
     }
 })();

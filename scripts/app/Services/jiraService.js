@@ -2,9 +2,9 @@
     'use strict';
     var request = require('request');
 
-    app.factory('jiraService',['$http', '$q', 'passwordService',function($http, $q, passwordService){
+    app.factory('jiraService',['$http', '$q', 'passwordService', 'requestService',function($http, $q, passwordService, requestService){
         
-        function searchJira(){
+        function searchJira(jiraQuery){
             var options = {
                 url: 'https://neogov.jira.com/rest/api/2/search',
                 method: "GET",
@@ -12,16 +12,15 @@
                     'Content-Type' : 'application/json',
                     'Authorization' : passwordService.getCredentials()
                 },
-                params: {
+                params: JSON.stringify({
                     fields: "key,issuetype,timeoriginalestimate",
-                    jql:"project=ROLL and Status = \"Ready for Dev\""
-                }
+                    jql:    jiraQuery
+                })
             }
-            return $http(options);
+            return requestService.executeRequest(options);
         }
 
         function updateIssue(issue){
-            var deffered = $q.defer();
             var options = {
                 url: 'https://neogov.jira.com/rest/api/2/issue/' + issue.key,
                 method: "PUT",
@@ -37,23 +36,30 @@
                         }]}
                 })
             }
-            request(options, function(error, response, body){
-                if(response.statusCode != 204){
-                    deffered.reject(response);
+            return requestService.executeRequest(options);
+        }
+
+        function getSession(authPayload){
+            var options = {
+                url: 'https://neogov.jira.com/rest/auth/1/session',
+                method: "GET",
+                headers:{
+                    'Content-Type' : 'application/json',
+                    'Authorization' : authPayload
                 }
-                else{
-                    deffered.resolve(response);
-                }
-            })
-            return deffered.promise;
+            }
+            return requestService.executeRequest(options);
         }
 
         return {
-            request: function(){
-                return searchJira();
+            searchJira: function(jiraQuery){
+                return searchJira(jiraQuery);
             },
             updateIssue: function(issue){
                 return updateIssue(issue);
+            },
+            getSession: function(authPayload){
+                return getSession(authPayload);
             }
         }
     }])

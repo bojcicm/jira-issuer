@@ -12,11 +12,14 @@
             updateIssues: updateIssues
         };
         vm.response = "";
+        vm.jqlQuery = "";
         vm.isSearching = false;
 
         function search(){
+            if(vm.jqlQuery == "") return;
+            
             vm.isSearching = true; 
-            jiraService.request()
+            jiraService.searchJira(vm.jqlQuery)
                 .then(function(response){
                     var test = response.data.issues;
                     test.forEach(function(issue) {
