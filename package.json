@@ -14,6 +14,7 @@
   ],
   "license": "CC0-1.0",
   "devDependencies": {
+    "electron-json-storage": "^2.0.0",
     "electron-prebuilt": "^1.2.0",
     "gulp": "^3.9.1",
     "gulp-livereload": "^3.8.1",

@@ -11,7 +11,8 @@
                 return deffered.promise;
             }
             request(options, function(error, response, body){
-                deffered.resolve(response);
+                if(error) deffered.reject(error)
+                else deffered.resolve(response);
             });
             return deffered.promise;
         }

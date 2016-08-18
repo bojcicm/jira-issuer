@@ -21,15 +21,19 @@
             vm.isSearching = true; 
             jiraService.searchJira(vm.jqlQuery)
                 .then(function(response){
-                    var test = response.data.issues;
-                    test.forEach(function(issue) {
-                        var date = new Date(null);
-                        date.setSeconds(issue.fields.timeoriginalestimate);
-                        issue.fields.timeoriginalestimate = date.toISOString().substr(11,8);
-                    }, this);
-                    vm.response = test;
-                }, function(response){
-                    logout();
+                    if(response.statusCode === 401)
+                        logout();
+                    else if(response.statusCode === 400)
+                        console.log(response.body);
+                    else{
+                        var foundIssues= JSON.parse(response.body).issues;
+                        foundIssues.forEach(function(issue) {
+                            var date = new Date(null);
+                            date.setSeconds(issue.fields.timeoriginalestimate);
+                            issue.fields.timeoriginalestimate = date.toISOString().substr(11,8);
+                        }, this);
+                        vm.response = foundIssues;
+                    }
                 }).finally(function(){
                     vm.isSearching = false;
                 });

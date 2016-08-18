@@ -13,13 +13,13 @@
                     passwordService.saveCredentials(email, password);
                     deffered.resolve();
                 }else{
-                    console.log(response);
+                    console.log(response.statusMessage);
                     deffered.reject();
                 }
             }
             function failedLogin(response){
                 deffered.reject();
-                console.log(response);
+                console.log(response.statusMessage);
             }
 
         }

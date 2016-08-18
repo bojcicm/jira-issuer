@@ -1,20 +1,22 @@
 (function () {
     'use strict';
     var request = require('request');
+    require('request').debug = true;
 
     app.factory('jiraService',['$http', '$q', 'passwordService', 'requestService',function($http, $q, passwordService, requestService){
         
         function searchJira(jiraQuery){
+            var auth = passwordService.getCredentials();
             var options = {
                 url: 'https://neogov.jira.com/rest/api/2/search',
-                method: "GET",
+                method: "POST",
                 headers:{
                     'Content-Type' : 'application/json',
-                    'Authorization' : passwordService.getCredentials()
+                    'Authorization' : auth
                 },
-                params: JSON.stringify({
-                    fields: "key,issuetype,timeoriginalestimate",
-                    jql:    jiraQuery
+                body: JSON.stringify({
+                    //'fields': 'key,issuetype,timeoriginalestimate',
+                    'jql':    jiraQuery
                 })
             }
             return requestService.executeRequest(options);
@@ -29,12 +31,13 @@
                     'Authorization' : passwordService.getCredentials(),
                     'cache-control' : 'no-cache'
                 },
-                body: JSON.stringify({
+                body: {
                     "update":{
                         "timetracking":[{
                             "set": {"originalEstimate" : "2h"}
                         }]}
-                })
+                },
+                json: true
             }
             return requestService.executeRequest(options);
         }
