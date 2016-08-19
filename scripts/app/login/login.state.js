@@ -12,6 +12,9 @@
                     templateUrl:  './scripts/app/login/login.template.html',
                     controller:   'loginController',
                     controllerAs: 'vm'
+                },
+                'header@':{
+                    templateUrl: './scripts/app/login/login.header.html'
                 }
             }
         });

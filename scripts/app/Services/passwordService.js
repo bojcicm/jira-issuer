@@ -2,11 +2,13 @@
     'use strict';
     var storage = require('electron-json-storage');
 
-    app.factory('passwordService',[function(){
+    app.factory('passwordService',['$q', function($q){
         var self = this;
         self.auth = "";
+        self.username = "";
 
-        function saveCredentials(email, password){
+        function saveCredentials(email, password, username){
+            self.username = username;
             var base64 = new Buffer(email + ":" + password).toString('base64');
             storage.has('auth', function(error, hasKey){
                 if(hasKey){
@@ -28,17 +30,24 @@
             self.auth = "";
         }
 
-        return {
-            saveCredentials : function(email, password){
-                return saveCredentials(email, password);
-            },
-            getCredentials : function(){
-                storage.get('auth', function(error, data){
+        function getCredentials(){
+            storage.get('auth', function(error, data){
                     if(error) throw error;
                     self.auth = data.auth;    
                 });
                 return self.auth;
+        }
+
+        function getUserName(){
+            return self.username;
+        }
+
+        return {
+            saveCredentials : function(email, password, username){
+                return saveCredentials(email, password, username);
             },
+            getCredentials : getCredentials,
+            getUserName : getUserName,
             clearCredentials: clearCredentials
         }
     }])

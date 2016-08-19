@@ -1,10 +1,14 @@
-<div class="loginBox">
-    <p ng-show="vm.failedLogin">Login failed, try again</p>
-    <form name="loginForm" novalidate ng-submit="vm.actions.tryLogin()">
-        <h1 class="loginBox__title">Login to JIRA</h1>
-        
-        <input class="loginBox__input" type="text" ng-model="vm.email" placeholder="E-mail address" ng-disabled="vm.isBusy" required />
-        <input class="loginBox__input" type="password" ng-model="vm.password" placeholder="Password" ng-disabled="vm.isBusy" required />
-        <button class="loginBox__button" type="submit" >{{ vm.isBusy ? 'Please wait...' : 'Prijava' }}</button>
+<div class="form-signin">
+    <form novalidate ng-submit="vm.actions.tryLogin()">
+        <h2 class="form-signin-heading">Login to JIRA</h1>
+
+            <div class="input-group">
+                <input class="form-control" type="text" ng-model="vm.email" placeholder="E-mail address" ng-disabled="vm.isBusy" required autofocus/>
+                <input class="form-control" type="password" ng-model="vm.password" placeholder="Password" ng-disabled="vm.isBusy" required/>
+
+                <button class="btn btn-sm btn-primary btn-block" type="submit">{{ vm.isBusy ? 'Please wait...' : 'Prijava' }}</button>
+
+            </div>
     </form>
+    <div ng-if="vm.failedLogin" class="alert alert-danger" >Login failed. Please try again!</div>
 </div>

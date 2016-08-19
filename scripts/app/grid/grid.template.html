@@ -1,16 +1,17 @@
-
-<input type="text" ng-model='vm.jqlQuery'>
-<button ng-click="vm.actions.search()">Search JIRA</button>
-<button ng-click="vm.actions.updateIssues()" ng-disabled="!vm.response">Update issues</button>
-<br/>
-<hr/>
-<div ng-show="vm.isSearching">
-    <p>Loading ...</p>
-</div>
-<div ng-show="!!vm.response">
-    <div ng-repeat="issue in vm.response">
-        <p>{{issue.fields.issuetype.name}} - {{issue.key}}</p>
-        <p>Estimate: {{issue.fields.timeoriginalestimate}}<p>
+<div style="padding-top: 70px;">
+    
+    <input type="text" ng-model='vm.jqlQuery'>
+    <button ng-click="vm.actions.search()">Search JIRA</button>
+    <button ng-click="vm.actions.updateIssues()" ng-disabled="!vm.response">Update issues</button>
+    <br/>
+    <hr/>
+    <div ng-show="vm.isSearching">
+        <p>Loading ...</p>
     </div>
+    <ul class="list-group" ng-show="!!vm.response">
+        <li class="list-group-item" ng-repeat="issue in vm.response">
+            {{issue.fields.issuetype.name}} - Estimate: {{issue.fields.timeoriginalestimate}}
+            <span class="badge">{{issue.key}}</span>
+        </li>
+    </ul>
 </div>
-

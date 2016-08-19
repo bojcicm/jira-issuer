@@ -1,5 +1,7 @@
 (function () {
     'use strict';
+    var storage = require('electron-json-storage');
+
     app.factory('accessService',['$q', '$http', 'passwordService', 'jiraService', function($q, $http, passwordService, jiraService){
         function login(email, password){
             var deffered = $q.defer();
@@ -10,7 +12,13 @@
 
             function successLogin(response){
                 if(response.body != "" && response.statusCode != 401){
-                    passwordService.saveCredentials(email, password);
+                    
+                    var username = JSON.parse(response.body).name;
+                    storage.set('username', username, function(error){
+                        if(error) throw error;
+                    });
+
+                    passwordService.saveCredentials(email, password, username);
                     deffered.resolve();
                 }else{
                     console.log(response.statusMessage);

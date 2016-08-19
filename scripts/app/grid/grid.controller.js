@@ -14,6 +14,15 @@
         vm.response = "";
         vm.jqlQuery = "";
         vm.isSearching = false;
+        vm.username = "";
+
+        init();
+
+        function init(){
+            var username = passwordService.getUserName();
+            //if(username == "") logout();
+            //else vm.username = username;
+        }
 
         function search(){
             if(vm.jqlQuery == "") return;
@@ -22,7 +31,8 @@
             jiraService.searchJira(vm.jqlQuery)
                 .then(function(response){
                     if(response.statusCode === 401)
-                        logout();
+                        //logout();
+                        return;
                     else if(response.statusCode === 400)
                         console.log(response.body);
                     else{
@@ -53,7 +63,6 @@
         }
 
         function logout(){
-            console.log("Logging out");
             passwordService.clearCredentials();
             $location.path('/login');
         }

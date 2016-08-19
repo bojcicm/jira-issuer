@@ -1,7 +1,5 @@
 (function () {
     'use strict';
-    var request = require('request');
-    require('request').debug = true;
 
     app.factory('jiraService',['$http', '$q', 'passwordService', 'requestService',function($http, $q, passwordService, requestService){
         

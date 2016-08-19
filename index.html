@@ -3,15 +3,19 @@
   <head>
     <meta charset="UTF-8">
     <title>Jira Issuer</title>
+    <link rel="stylesheet" href="./styles/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles/style.css">
   </head>
   <body>
-    <h1>JIRA issuer</h1>
     <div ui-view="header"></div>
-    <div ui-view="content"></div>
+    <div class="container">
+      <div ui-view="content"></div>
+    </div>
   </body>
 
   <script src="./scripts/vendor/angular.js"></script>
   <script src="./scripts/vendor/angular-ui-router.js"></script>
+  
 
   <script src="./scripts/app/app.module.js"></script>
   <script src="./scripts/app/app.config.js"></script>
@@ -26,7 +30,6 @@
   <script src="./scripts/app/Services/jiraService.js"></script>
   <script src="./scripts/app/Services/passwordService.js"></script>
   <script src="./scripts/app/Services/requestService.js"></script>
-
   <script>
     // You can also require other files to run in this process
     require('./renderer.js')

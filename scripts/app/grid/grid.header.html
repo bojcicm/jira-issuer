@@ -1,2 +1,12 @@
-<span>Hello </span><button ng-click="vm.actions.logout()">Logout</button>
-<hr/>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand">Hello {{vm.username}}</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Logout</a></li>
+        </ul>
+    </div>
+</nav>
