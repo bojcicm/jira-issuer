@@ -1,12 +1,10 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-
-        <div class="navbar-header">
-            <a class="navbar-brand">Hello {{vm.username}}</a>
-        </div>
-
+<div class="navbar navbar-default nav-links navbar-fixed-top">
+    <div class="container">
+        <a class="mini-navbar navbar-brand" href="/">
+            Hello {{vm.username}}
+        </a>
         <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Logout</a></li>
+            <li ><span class="btn btn-warning" href="#" ng-click="vm.actions.logout()">Logout</span></li>
         </ul>
     </div>
-</nav>
+</div>

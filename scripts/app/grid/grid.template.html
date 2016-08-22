@@ -1,17 +1,47 @@
 <div style="padding-top: 70px;">
     
-    <input type="text" ng-model='vm.jqlQuery'>
-    <button ng-click="vm.actions.search()">Search JIRA</button>
-    <button ng-click="vm.actions.updateIssues()" ng-disabled="!vm.response">Update issues</button>
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-xs-8">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Write JQL" ng-model='vm.jqlQuery'>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="vm.actions.search()">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-xs-4">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Duration" ng-model="vm.durationString" ng-disabled="!vm.response">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="vm.actions.updateIssues()" ng-disabled="!vm.response">Update issues</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
     <br/>
     <hr/>
-    <div ng-show="vm.isSearching">
-        <p>Loading ...</p>
+    <div style="margin: 0 auto; width: 15%" ng-show="vm.isSearching">
+        <div class="loader"></div>
     </div>
-    <ul class="list-group" ng-show="!!vm.response">
-        <li class="list-group-item" ng-repeat="issue in vm.response">
-            {{issue.fields.issuetype.name}} - Estimate: {{issue.fields.timeoriginalestimate}}
-            <span class="badge">{{issue.key}}</span>
-        </li>
-    </ul>
+    <div class="table-responsive">
+        <table class="table table-striped" ng-show="!vm.isSearching && vm.response">
+            <tr>
+                <th>Issue Type</th>
+                <th>Issue Key</th>
+                <th>Estimated</th>
+            </tr>
+            <tr ng-repeat="issue in vm.response"
+                ng-class="
+                [{'success': issue.gridDisplayStatus == vm.issueStatus.updated},
+                {'warning': issue.gridDisplayStatus == vm.issueStatus.updating},
+                {'danger': issue.gridDisplayStatus == vm.issueStatus.error}]">
+                <td>{{issue.fields.issuetype.name}}</td>
+                <td>{{issue.key}}</td>
+                <td>{{issue.fields.timeoriginalestimate}}</td>
+            </tr>
+        </table>
+    </div>
 </div>

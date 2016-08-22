@@ -2,7 +2,7 @@ var gulp = require('gulp'),
 run = require('gulp-run'),
 livereload = require('gulp-livereload')
 
-var appFolder = ['scripts/**/*.js', 'scripts/**/*.html','styles/*.css', '*.html'];
+var appFolder = ['scripts/**/*.js', 'scripts/**/*.html','styles/*.css', '*.html', '*.js'];
 
 gulp.task('filesChanges', function(){
     console.log("file changed");

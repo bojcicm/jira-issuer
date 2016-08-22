@@ -3,7 +3,7 @@
 
     app.factory('jiraService',['$http', '$q', 'passwordService', 'requestService',function($http, $q, passwordService, requestService){
         
-        function searchJira(jiraQuery){
+        function searchJira(jiraQuery, numberOfIssues){
             var auth = passwordService.getCredentials();
             var options = {
                 url: 'https://neogov.jira.com/rest/api/2/search',
@@ -14,13 +14,14 @@
                 },
                 body: JSON.stringify({
                     //'fields': 'key,issuetype,timeoriginalestimate',
-                    'jql':    jiraQuery
+                    'jql':    jiraQuery,
+                    'maxResults': numberOfIssues ? numberOfIssues : 50
                 })
             }
             return requestService.executeRequest(options);
         }
 
-        function updateIssue(issue){
+        function updateIssue(issue, durationString){
             var options = {
                 url: 'https://neogov.jira.com/rest/api/2/issue/' + issue.key,
                 method: "PUT",
@@ -32,7 +33,7 @@
                 body: {
                     "update":{
                         "timetracking":[{
-                            "set": {"originalEstimate" : "2h"}
+                            "set": {"originalEstimate" : durationString}
                         }]}
                 },
                 json: true
@@ -53,11 +54,11 @@
         }
 
         return {
-            searchJira: function(jiraQuery){
-                return searchJira(jiraQuery);
+            searchJira: function(jiraQuery, numberOfIssues){
+                return searchJira(jiraQuery, numberOfIssues);
             },
-            updateIssue: function(issue){
-                return updateIssue(issue);
+            updateIssue: function(issue, durationString){
+                return updateIssue(issue, durationString);
             },
             getSession: function(authPayload){
                 return getSession(authPayload);
